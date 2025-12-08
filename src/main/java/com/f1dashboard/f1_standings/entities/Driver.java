@@ -1,11 +1,27 @@
 package com.f1dashboard.f1_standings.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Drivers")
 public class Driver {
+    @Id
+    private Long id;
     private String nume;
-    private Echipa echipa;
+
+
+    private String echipa;
     private long nr_puncte;
     private int nr_victorii;
-    private int first_laps;
+    private int nr_podiumuri;
+
+    public int getNr_podiumuri() {
+        return nr_podiumuri;
+    }
+
+    public void setNr_podiumuri(int nr_podiumuri) {
+        this.nr_podiumuri = nr_podiumuri;
+    }
 
     public String getNume() {
         return nume;
@@ -15,11 +31,11 @@ public class Driver {
         this.nume = nume;
     }
 
-    public Echipa getEchipa() {
+    public String getEchipa() {
         return echipa;
     }
 
-    public void setEchipa(Echipa echipa) {
+    public void setEchipa(String echipa) {
         this.echipa = echipa;
     }
 
@@ -39,20 +55,18 @@ public class Driver {
         this.nr_victorii = nr_victorii;
     }
 
-    public int getFirst_laps() {
-        return first_laps;
+    public Driver() {
+
     }
 
-    public void setFirst_laps(int first_laps) {
-        this.first_laps = first_laps;
-    }
 
-    public Driver(String nume, Echipa echipa, long nr_puncte, int nr_victorii, int first_laps) {
+    public Driver(String nume, String echipa, long nr_puncte, int nr_victorii, int nr_podiumuri) {
         this.nume = nume;
         this.echipa = echipa;
         this.nr_puncte = nr_puncte;
         this.nr_victorii = nr_victorii;
-        this.first_laps = first_laps;
+        this.nr_podiumuri = nr_podiumuri;
+
     }
 
     @Override
@@ -62,7 +76,7 @@ public class Driver {
                 ", echipa=" + echipa +
                 ", nr_puncte=" + nr_puncte +
                 ", nr_victorii=" + nr_victorii +
-                ", first_laps=" + first_laps +
+                ", first_laps=" + nr_podiumuri +
                 '}';
     }
 }
