@@ -15,5 +15,5 @@ import java.util.List;
 
 public interface DriverJpaRepository extends JpaRepository<Driver,Long> {
 
-    List<Driver> findAllByOrderByNr_puncteDesc();
+    List<Driver> findAllByOrderByNrPuncteDesc();
 }

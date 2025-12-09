@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 @Transactional
 public interface EchipeJpaRepository extends JpaRepository<Echipa,Long> {
-    List<Echipa> findAllByOrderByNrPuncteDesc();
+    //List<Echipa> findAllByOrderByNrPuncteDesc();
 
 
 }

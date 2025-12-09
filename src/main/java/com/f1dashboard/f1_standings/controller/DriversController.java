@@ -19,7 +19,7 @@ public class DriversController {
     @GetMapping("/drivers")
     public String driversPage(Model model)
     {
-        List<Driver>drivers=repo.findAllByOrderByNr_puncteDesc();
+        List<Driver>drivers=repo.findAllByOrderByNrPuncteDesc();
         model.addAttribute("drivers",drivers);
         return "drivers";
     }
@@ -27,7 +27,7 @@ public class DriversController {
     @ResponseBody
     public List<Driver>driversApi()
     {
-        return repo.findAllByOrderByNr_puncteDesc();
+        return repo.findAllByOrderByNrPuncteDesc();
     }
     @GetMapping("/api/drivers/{id}")
     @ResponseBody

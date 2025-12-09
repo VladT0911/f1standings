@@ -8,11 +8,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 @Repository
 @Transactional
 
 public interface CursaJpaRepository extends JpaRepository<Cursa,Long> {
-    List<Cursa> findAllByOrderByData_CurseiAsc();
+    //List<Cursa>findAllByOrderByDataCurseiAsc() ;
 
 }

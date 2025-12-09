@@ -11,7 +11,7 @@ public class Driver {
 
 
     private String echipa;
-    private long nr_puncte;
+    private long nrPuncte;
     private int nr_victorii;
     private int nr_podiumuri;
 
@@ -39,12 +39,12 @@ public class Driver {
         this.echipa = echipa;
     }
 
-    public long getNr_puncte() {
-        return nr_puncte;
+    public long getNrPuncte() {
+        return nrPuncte;
     }
 
-    public void setNr_puncte(long nr_puncte) {
-        this.nr_puncte = nr_puncte;
+    public void setNrPuncte(long nrPuncte) {
+        this.nrPuncte = nrPuncte;
     }
 
     public int getNr_victorii() {
@@ -60,10 +60,10 @@ public class Driver {
     }
 
 
-    public Driver(String nume, String echipa, long nr_puncte, int nr_victorii, int nr_podiumuri) {
+    public Driver(String nume, String echipa, long nrPuncte, int nr_victorii, int nr_podiumuri) {
         this.nume = nume;
         this.echipa = echipa;
-        this.nr_puncte = nr_puncte;
+        this.nrPuncte = nrPuncte;
         this.nr_victorii = nr_victorii;
         this.nr_podiumuri = nr_podiumuri;
 
@@ -74,7 +74,7 @@ public class Driver {
         return "Driver{" +
                 "nume='" + nume + '\'' +
                 ", echipa=" + echipa +
-                ", nr_puncte=" + nr_puncte +
+                ", nr_puncte=" + nrPuncte +
                 ", nr_victorii=" + nr_victorii +
                 ", first_laps=" + nr_podiumuri +
                 '}';
