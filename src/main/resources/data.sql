@@ -29,3 +29,29 @@ insert into Drivers(id, nume, echipa, nr_puncte, nr_victorii, nr_podiumuri) valu
 insert into Drivers(id, nume, echipa, nr_puncte, nr_victorii, nr_podiumuri) values (18, 'Pierre Gasly', 'Alpine', 22, 0, 0);
 insert into Drivers(id, nume, echipa, nr_puncte, nr_victorii, nr_podiumuri) values (19, 'Gabriel Bortoleto', 'Sauber', 19, 0, 0);
 insert into Drivers(id, nume, echipa, nr_puncte, nr_victorii, nr_podiumuri) values (20, 'Fernando Colapinto', 'Alpine', 0, 0, 0);
+
+
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (1,  '2025-03-14', 'Australia',      0, 58);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (2,  '2025-03-21', 'China',          1, 56);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (3,  '2025-04-04', 'Japan',          0, 53);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (4,  '2025-04-11', 'Bahrain',        0, 57);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (5,  '2025-04-18', 'Saudi Arabia',   0, 50);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (6,  '2025-05-02', 'USA',            1, 57);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (7,  '2025-05-16', 'Italy',          0, 63);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (8,  '2025-05-23', 'Monaco',         0, 78);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (9,  '2025-05-30', 'Spain',          0, 66);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (10, '2025-06-13', 'Canada',         0, 70);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (11, '2025-06-27', 'Austria',        0, 71);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (12, '2025-07-04', 'United Kingdom', 0, 52);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (13, '2025-07-25', 'Belgium',        1, 44);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (14, '2025-08-01', 'Hungary',        0, 70);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (15, '2025-08-29', 'Netherlands',    0, 72);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (16, '2025-09-05', 'Italy',          0, 53);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (17, '2025-09-19', 'Azerbaijan',     0, 51);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (18, '2025-10-03', 'Singapore',      0, 61);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (19, '2025-10-17', 'USA',            1, 56);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (20, '2025-10-24', 'Mexico',         0, 71);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (21, '2025-11-07', 'Brazil',         1, 71);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (22, '2025-11-20', 'USA',            0, 50);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (23, '2025-11-28', 'Qatar',          1, 57);
+INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (24, '2025-12-05', 'UAE',            0, 58);
