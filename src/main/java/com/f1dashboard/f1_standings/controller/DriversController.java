@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+@Controller
 public class DriversController {
     private final DriverJpaRepository repo;
     public DriversController(DriverJpaRepository repo)
@@ -21,7 +23,7 @@ public class DriversController {
     {
         List<Driver>drivers=repo.findAllByOrderByNrPuncteDesc();
         model.addAttribute("drivers",drivers);
-        return "drivers";
+        return "Drivers";
     }
     @GetMapping("/api/drivers")
     @ResponseBody
