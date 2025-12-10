@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class Cursa {
     @Id
     private long id;
-    private LocalDate data_cursei;
+    private LocalDate dataCursei;
     private String tara;
     @Column(name = "is_Sprint")
     private boolean isSprint;

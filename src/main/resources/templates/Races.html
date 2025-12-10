@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Races</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>F1 Races Calendar</h1>
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>Round</th>
+        <th>Date</th>
+        <th>Country</th>
+        <th>Type</th>
+        <th>Laps</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c,stat : ${curse}">
+        <td th:text="${stat.index + 1}">1</td>
+        <td th:text="${c.data_cursei}">2025-01-01</td>
+        <td th:text="${c.tara}">Country</td>
+        <td th:text="${c.isSprint ? 'Sprint' : 'Race'}">Race</td>
+        <td th:text="${c.nr_laps}">0</td>
+    </tr>
+    </tbody>
+</table>
+<a href="/home">Back to Home</a>
+</body>
+</html>

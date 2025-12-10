@@ -1,6 +1,5 @@
 package com.f1dashboard.f1_standings.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,7 +19,7 @@ public class Echipa {
     private String nume;
     private String powerunit;
     private String Team_principal;
-    private int nr_puncte;
+    private int nrPuncte;
 
     @Override
     public String toString() {
@@ -29,7 +28,7 @@ public class Echipa {
                 ", nume='" + nume + '\'' +
                 ", powerunit='" + powerunit + '\'' +
                 ", Team_principal='" + Team_principal + '\'' +
-                ", nr_puncte=" + nr_puncte +
+                ", nr_puncte=" + nrPuncte +
                 '}';
     }
 }
