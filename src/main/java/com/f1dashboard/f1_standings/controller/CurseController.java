@@ -18,7 +18,7 @@ public class CurseController {
 
     @GetMapping("/curse")
     public String cursePage(Model model) {
-        List<Cursa> curse = repo.findAllByOrderBydataCurseiAsc();
+        List<Cursa> curse = repo.findAllByOrderByDataCurseiAsc();
         model.addAttribute("curse", curse);
         return "Races";
     }

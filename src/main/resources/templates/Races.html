@@ -20,7 +20,7 @@
     <tbody>
     <tr th:each="c,stat : ${curse}">
         <td th:text="${stat.index + 1}">1</td>
-        <td th:text="${c.data_cursei}">2025-01-01</td>
+        <td th:text="${c.dataCursei}">2025-01-01</td>
         <td th:text="${c.tara}">Country</td>
         <td th:text="${c.isSprint ? 'Sprint' : 'Race'}">Race</td>
         <td th:text="${c.nr_laps}">0</td>

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CursaJpaRepository extends JpaRepository<Cursa, Long> {
-    List<Cursa> findAllByOrderBydataCurseiAsc();
+    List<Cursa> findAllByOrderByDataCurseiAsc();
 }
