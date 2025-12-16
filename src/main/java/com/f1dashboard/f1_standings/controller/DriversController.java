@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,15 +20,22 @@ import java.util.Optional;
 public class DriversController {
 
     private final DriverJpaRepository repo;
+
     public DriversController(DriverJpaRepository repo)
     {
         this.repo=repo;
     }
     @GetMapping("/drivers")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 
-    public String driversPage(Model model) {
+
+    public String driversPage(Model model,Authentication authentication) {
         model.addAttribute("drivers", repo.findAllByOrderByNrPuncteDesc());
+        boolean isAdmin = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        model.addAttribute("isAdmin", isAdmin);
         return "drivers";
     }
     @GetMapping("/api/drivers")
