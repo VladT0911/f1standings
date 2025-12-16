@@ -3,30 +3,101 @@
 <head>
     <meta charset="utf-8"/>
     <title>Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+
+            /* Background image */
+            background-image: url('/images/Loginpage.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            color: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-box label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .login-box button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e10600; /* F1 red */
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #b80500;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
+
 <body>
-<h1>Sign in</h1>
 
-<form th:action="@{/login}" method="post">
-    <!-- CSRF token -->
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<div class="login-box">
+    <h1>Sign in</h1>
 
-    <div>
+    <form th:action="@{/login}" method="post">
+        <!-- CSRF token -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
         <label>Username</label>
         <input type="text" name="username" required />
-    </div>
 
-    <div>
         <label>Password</label>
         <input type="password" name="password" required />
-    </div>
 
-    <div>
         <button type="submit">Sign in</button>
-    </div>
-</form>
+    </form>
 
-<p th:if="${param.error}" style="color:red;">Invalid username or password.</p>
-<p th:if="${param.logout}" style="color:green;">You have been logged out.</p>
+    <p class="message" th:if="${param.error}" style="color:#ff6b6b;">
+        Invalid username or password.
+    </p>
+
+    <p class="message" th:if="${param.logout}" style="color:#7CFC00;">
+        You have been logged out.
+    </p>
+</div>
+
 </body>
 </html>
