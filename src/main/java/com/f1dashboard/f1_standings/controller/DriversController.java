@@ -47,6 +47,41 @@ public class DriversController {
     public List<Driver> top3DriversApi() {
         return repo.findTop3ByOrderByNrPuncteDesc();
     }
+    @GetMapping("/api/drivers/nrvictorii")
+    @ResponseBody
+    public List<Driver>DriversNrVictoriiapi()
+    {
+        return repo.findAllByOrderByNrVictoriiDesc();
+    }
+    @GetMapping("/api/drivers/min-points")
+    @ResponseBody
+    public List<Driver> getDriversByMinPoints(@RequestParam long points) {
+        return repo.findByNrPuncteGreaterThanEqual(points);
+    }
+    @GetMapping("/api/drivers/findechipa")
+    @ResponseBody
+    public List<Driver> findByEchipa(@RequestParam String echipa)
+    {
+        return repo.findByEchipaIgnoreCase(echipa);
+    }
+    @GetMapping("/api/drivers/filter")
+    @ResponseBody
+    public List<Driver> filterDrivers(
+            @RequestParam String echipa,
+            @RequestParam long points) {
+        return repo.findByEchipaAndNrPuncteGreaterThanEqual(echipa, points);
+    }
+
+
+
+        //
+    //List<Driver> findByEchipa(String echipa);
+
+    //  Drivers sorted by wins
+    //List<Driver> findAllByOrderByNrVictoriiDesc();
+
+    // Minimum points
+    //List<Driver> findByNrPuncteGreaterThanEqual(long points);
 
 
 
