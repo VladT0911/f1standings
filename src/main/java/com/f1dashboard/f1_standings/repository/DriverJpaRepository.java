@@ -18,16 +18,16 @@ public interface DriverJpaRepository extends JpaRepository<Driver,Long> {
      Optional<Driver> findFirstByOrderByNrPuncteDesc();
     List<Driver> findTop3ByOrderByNrPuncteDesc();
 
-    // 🏎️ 3. Drivers by team
+    //  Drivers by team
     List<Driver> findByEchipa(String echipa);
 
-    // 📈 4. Drivers sorted by wins
+    //  Drivers sorted by wins
     List<Driver> findAllByOrderByNrVictoriiDesc();
 
-    // 🔍 5. Minimum points
+    // Minimum points
     List<Driver> findByNrPuncteGreaterThanEqual(long points);
 
-    // 🏁 6. Team + minimum points
+    //  Team + minimum points
     List<Driver> findByEchipaAndNrPuncteGreaterThanEqual(String echipa, long points);
 
 }

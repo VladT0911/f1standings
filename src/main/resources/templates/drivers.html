@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Drivers</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div style="margin-bottom: 20px;">
+    <button onclick="loadAll()">Show All Drivers</button>
+    <button onclick="loadTop()">Show Top Driver</button>
+    <button onclick="loadTop3()">Show Top 3 Drivers</button>
+</div>
+<h1>F1 Drivers</h1>
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>Pos</th>
+        <th>Name</th>
+        <th>Team</th>
+        <th>Points</th>
+        <th>Wins</th>
+        <th>Podiums</th>
+    </tr>
+    </thead>
+    <tbody id="drivers-body">
+    <tr th:each="d,stat : ${drivers}">
+        <td th:text="${stat.index + 1}">1</td>
+        <td th:text="${d.nume}">Driver Name</td>
+        <td th:text="${d.echipa}">Team</td>
+        <td th:text="${d.nrPuncte}">0</td>
+        <td th:text="${d.nrVictorii}">0</td>
+        <td th:text="${d.nrPodiumuri}">0</td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/home">Back to Home</a>
+<script>
+    function renderTable(drivers) {
+        const tbody = document.getElementById("drivers-body");
+        tbody.innerHTML = "";
+
+        drivers.forEach((d, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${d.nume}</td>
+                    <td>${d.echipa}</td>
+                    <td>${d.nrPuncte}</td>
+                    <td>${d.nrVictorii}</td>
+                    <td>${d.nrPodiumuri}</td>
+                </tr>
+            `;
+        });
+    }
+
+    function loadAll() {
+        fetch("/api/drivers")
+            .then(res => res.json())
+            .then(data => renderTable(data));
+    }
+
+    function loadTop() {
+        fetch("/api/drivers/top")
+            .then(res => res.json())
+            .then(data => renderTable(data));
+    }
+
+    function loadTop3() {
+        fetch("/api/drivers/top3")
+            .then(res => res.json())
+            .then(data => renderTable(data));
+    }
+</script>
+
+
+</body>
+</html>

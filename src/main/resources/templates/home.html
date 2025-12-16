@@ -61,7 +61,7 @@
 
 <body>
 
-<!-- TOP BAR WITH LOGOUT -->
+
 <div class="top-bar">
     <form th:action="@{/logout}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
