@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface CursaJpaRepository extends JpaRepository<Cursa, Long> {
     List<Cursa> findAllByOrderByDataCurseiAsc();
+    List<Cursa> findByIsSprint(boolean isSprint);
+    List<Cursa> findAllByOrderByNrLapsDesc();
+    List<Cursa> findByIsSprintOrderByNrLapsDesc(boolean isSprint);
 }

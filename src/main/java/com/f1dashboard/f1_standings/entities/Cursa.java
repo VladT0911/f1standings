@@ -8,12 +8,11 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "Curse")
 public class Cursa {
@@ -21,7 +20,8 @@ public class Cursa {
     private long id;
     private LocalDate dataCursei;
     private String tara;
-    @Column(name = "is_Sprint")
+    @Column(name = "isSprint")
     private boolean isSprint;
-    private int nr_laps;
+    @Column(name = "nrLaps")
+    private int nrLaps;
 }

@@ -2,54 +2,46 @@ package com.f1dashboard.f1_standings.controller;
 
 import com.f1dashboard.f1_standings.entities.Cursa;
 import com.f1dashboard.f1_standings.repository.CursaJpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class CurseController {
-    private final CursaJpaRepository repo;
 
-    public CurseController(CursaJpaRepository repo) {
-        this.repo = repo;
+    private final CursaJpaRepository cursaRepository;
+
+    public CurseController(CursaJpaRepository cursaRepository) {
+        this.cursaRepository = cursaRepository;
     }
 
-    @GetMapping("/curse")
-    public String cursePage(Model model) {
-        List<Cursa> curse = repo.findAllByOrderByDataCurseiAsc();
+    @GetMapping("/races")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String racesPage(Model model) {
+        List<Cursa> curse = cursaRepository.findAllByOrderByDataCurseiAsc();
         model.addAttribute("curse", curse);
-        return "Races";
+        return "races";
     }
 
-    @GetMapping("/api/races")
+    @GetMapping("/races/filter")
     @ResponseBody
-    public List<RaceEvent> racesApi() {
-        return repo.findAllByOrderByDataCurseiAsc().stream()
-                .map(cursa -> new RaceEvent(
-                        cursa.getId(),
-                        cursa.getTara(),
-                        cursa.getDataCursei().toString(),
-                        cursa.isSprint() ? "Sprint" : "Race"
-                ))
-                .collect(Collectors.toList());
+    public List<Cursa> filterRaces(@RequestParam boolean sprint) {
+        return cursaRepository.findByIsSprint(sprint);
     }
 
-    public static class RaceEvent {
-        public long id;
-        public String title;
-        public String start;
-        public String type;
-
-        public RaceEvent(long id, String title, String start, String type) {
-            this.id = id;
-            this.title = title;
-            this.start = start;
-            this.type = type;
+    @GetMapping("/races/order-by-laps")
+    @ResponseBody
+    public List<Cursa> orderByLaps(@RequestParam(required = false) Boolean sprint) {
+        if (sprint == null) {
+            return cursaRepository.findAllByOrderByNrLapsDesc();
         }
+        return cursaRepository.findByIsSprintOrderByNrLapsDesc(sprint);
     }
+
+
 }
