@@ -58,3 +58,4 @@ INSERT INTO Curse(id, data_cursei, tara, is_sprint, nr_laps) VALUES (24, '2025-1
 
 INSERT INTO users(username, password, role)VALUES ('user','$2a$12$2di3sHp6FpOtqQPoJROs9ue3yiorSVU5oC3XHKyEhics5Y1NFSlsS','USER');
 INSERT INTO users(username, password, role)VALUES ('Vlad','$2a$12$Zl83w6VWkdhecFj8y6AlLuW1i9YKPRQOCeMIlPz.5V8QraoAZYpI6','USER');
+INSERT into users(username, password, role) VALUES ('admin', '$2a$12$U0Oom.RZ96ZB33tZ0CpwWemj2qr/rO7pv426qNZMJ4adTWdlcyNVW', 'ADMIN');
