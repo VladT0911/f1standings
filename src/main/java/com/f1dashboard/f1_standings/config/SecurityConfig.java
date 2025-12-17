@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
                     .authorizeHttpRequests(authz -> authz
-                            .requestMatchers("/login", "/css/**","/images/**").permitAll()
+                            .requestMatchers("/login","/register","/css/**","/images/**").permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .anyRequest().authenticated()
                     )

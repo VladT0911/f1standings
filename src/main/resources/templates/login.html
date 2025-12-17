@@ -89,6 +89,10 @@
 
         <button type="submit">Sign in</button>
     </form>
+    <form th:action="@{/register}" method="get" style="margin-top: 10px;">
+        <button type="submit">Register</button>
+    </form>
+
 
     <p class="message" th:if="${param.error}" style="color:#ff6b6b;">
         Invalid username or password.

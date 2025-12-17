@@ -1,12 +1,30 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('/images/f1-background.jpg'); /* add your image in static/images */
+body,body, body p, body label, body h1, body h2, body h3, body h4, body h5, body h6, body td, body th, body span {
+         color: #ff0000; /* red text */
+     }
+.page-background {
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed;
-    color: white;
-    margin: 0;
-    padding: 0 20px;
+    min-height: 100vh;
+    width: 100%;
+}
+.home-background {
+    background-image: url('/images/home-bg.jpg'); /* path to your image */
+}
+.register-background {
+    background-image: url('/images/registe-bg.jpg');
+}
+
+.drivers-background {
+    background-image: url('/images/drivers-bg.jpg');
+}
+
+.races-background {
+    background-image: url('/images/races-bg.jpg');
+}
+
+.teams-background {
+    background-image: url('/images/teams-bg.jpg');
 }
 
 /* Headings */
@@ -22,31 +40,34 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: rgba(0, 0, 0, 0.8); /* semi-transparent black */
+    background-color: rgba(0, 0, 0, 0.95); /* less transparent black for better readability */
     border-radius: 10px;
     overflow: hidden;
+    color: #ff0000; /* red text inside the table */
 }
 
 table th, table td {
     padding: 12px 15px;
     text-align: center;
     border-bottom: 1px solid #ff0000;
+    color: #ff0000; /* ensure table text is red */
 }
 
 table th {
     background-color: #ff0000;
-    color: white;
+    color: white; /* keep header text white for contrast */
     font-size: 16px;
 }
 
 table tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.2); /* slightly transparent for stripes */
 }
 
 table tr:hover {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 0, 0.7); /* darker hover for better visibility */
     cursor: pointer;
 }
+
 
 /* Buttons */
 button {
@@ -75,7 +96,7 @@ input[type="text"], input[type="number"] {
     border: 1px solid #ff0000;
     margin: 5px;
     width: 180px;
-    color: black;
+    color: red;
     font-weight: bold;
 }
 

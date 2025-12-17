@@ -33,6 +33,10 @@ public class AdminController {
                 .map(d -> {
                     d.setNume(payload.getNume());
                     d.setEchipa(payload.getEchipa());
+                    d.setNrPuncte(payload.getNrPuncte());
+                    d.setNrVictorii(payload.getNrVictorii());
+                    d.setNrPodiumuri(payload.getNrPodiumuri());
+
 
                     driverRepository.save(d);
                     return ResponseEntity.ok(d);

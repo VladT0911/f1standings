@@ -27,6 +27,7 @@ public interface DriverJpaRepository extends JpaRepository<Driver,Long> {
     // Minimum points
     List<Driver> findByNrPuncteGreaterThanEqual(long points);
 
+
     //  Team + minimum points
     List<Driver> findByEchipaAndNrPuncteGreaterThanEqual(String echipa, long points);
 

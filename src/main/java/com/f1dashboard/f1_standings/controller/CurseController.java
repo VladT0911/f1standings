@@ -27,6 +27,11 @@ public class CurseController {
         model.addAttribute("curse", curse);
         return "races";
     }
+    @GetMapping("/races/all")
+    @ResponseBody
+    public List<Cursa> getAllRaces() {
+        return cursaRepository.findAll();
+    }
 
     @GetMapping("/races/filter")
     @ResponseBody

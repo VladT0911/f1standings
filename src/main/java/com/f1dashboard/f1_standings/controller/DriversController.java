@@ -79,6 +79,11 @@ public class DriversController {
             @RequestParam long points) {
         return repo.findByEchipaAndNrPuncteGreaterThanEqual(echipa, points);
     }
+    @GetMapping("/api/drivers/{id}")
+    @ResponseBody
+    public Driver getDriver(@PathVariable Long id) {
+        return repo.findById(id).orElseThrow();
+    }
 
 
 
