@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +17,7 @@ public class Echipa {
     private Long id;
     private String nume;
     private String powerunit;
-    private String Team_principal;
+    private String teamPrincipal;
     private int nrPuncte;
 
     @Override
@@ -27,8 +26,8 @@ public class Echipa {
                 "id=" + id +
                 ", nume='" + nume + '\'' +
                 ", powerunit='" + powerunit + '\'' +
-                ", Team_principal='" + Team_principal + '\'' +
-                ", nr_puncte=" + nrPuncte +
+                ", TeamPrincipal='" + teamPrincipal + '\'' +
+                ", nrPuncte=" + nrPuncte +
                 '}';
     }
 }

@@ -8,5 +8,12 @@ import java.util.List;
 
 @Repository
 public interface EchipeJpaRepository extends JpaRepository<Echipa, Long> {
+
     List<Echipa> findAllByOrderByNrPuncteDesc();
+
+    List<Echipa> findByPowerunitIgnoreCase(String powerunit);
+
+    List<Echipa> findAllByOrderByTeamPrincipalAsc();
+
+    List<Echipa> findByPowerunitIgnoreCaseOrderByTeamPrincipalAsc(String powerunit);
 }
