@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Races</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+    <style>
+        body { color: red; }
+
+        table, th, td { color: red; }
+        table { background: rgba(255,255,255,0.9); }
+
+        #calendar {
+            background: rgba(255,255,255,0.95);
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body class="page-background races-background">
+
+<h1>F1 Races Calendar</h1>
+<button onclick="location.href='/home'">Back to Home</button>
+
+<div>
+    <label>Show only sprints?</label>
+    <select id="sprintFilter">
+        <option value="">All</option>
+        <option value="true">Sprint</option>
+        <option value="false">Race</option>
+    </select>
+
+    <button id="filterSprintBtn">Filter</button>
+    <button id="orderLapsBtn">Order by Laps</button>
+    <button id="filterAndOrderBtn">Filter + Order</button>
+</div>
+
+<div id="calendar"></div>
+
+<h2>All Races</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Country</th>
+        <th>Type</th>
+        <th>Laps</th>
+    </tr>
+    </thead>
+    <tbody id="races-body"></tbody>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const calendar = new FullCalendar.Calendar(
+            document.getElementById("calendar"),
+            {
+                initialView: "dayGridMonth",
+                headerToolbar: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,listYear"
+                }
+            }
+        );
+        calendar.render();
+
+        function render(races) {
+            const tbody = document.getElementById("races-body");
+            tbody.innerHTML = "";
+            calendar.removeAllEvents();
+
+            races.forEach((r, i) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${r.dataCursei}</td>
+                        <td>${r.tara}</td>
+                        <td>${r.sprint ? "Sprint" : "Race"}</td>
+                        <td>${r.nrLaps}</td>
+                    </tr>
+                `;
+
+                calendar.addEvent({
+                    title: r.tara + (r.sprint ? " (Sprint)" : ""),
+                    start: r.dataCursei,
+                    allDay: true
+                });
+            });
+        }
+
+        function loadAll() {
+            fetch("/races/all")
+                .then(r => r.json())
+                .then(render);
+        }
+
+        loadAll();
+
+        document.getElementById("filterSprintBtn").onclick = () => {
+            const v = sprintFilter.value;
+            if (v === "") loadAll();
+            else fetch(`/races/filter?sprint=${v}`).then(r => r.json()).then(render);
+        };
+
+        document.getElementById("orderLapsBtn").onclick = () => {
+            fetch("/races/order-by-laps").then(r => r.json()).then(render);
+        };
+
+        document.getElementById("filterAndOrderBtn").onclick = () => {
+            const v = sprintFilter.value;
+            const url = v ? `/races/filter?sprint=${v}` : "/races/all";
+            fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    data.sort((a,b) => b.nrLaps - a.nrLaps);
+                    render(data);
+                });
+        };
+    });
+</script>
+
+</body>
+</html>

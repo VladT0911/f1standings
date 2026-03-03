@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <title>Drivers</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body th:attr="data-is-admin=${#authorization.expression('hasRole(''ADMIN'')')}"
+      class="page-background drivers-background">
+
+<div style="margin-bottom: 20px;">
+    <button onclick="loadAll()">Show All Drivers</button>
+    <button onclick="loadTop()">Show Top Driver</button>
+    <button onclick="loadTop3()">Show Top 3 Drivers</button>
+    <button onclick="loadNrvictorii()">Show By Number of victories</button>
+    <button onclick="window.location.href='/home'">Back to Home</button>
+</div>
+
+<div style="margin-bottom:20px;">
+    <label>Team Name:</label>
+    <input type="text" id="teamInput" placeholder="Enter team name" />
+    <label>Minimum Points:</label>
+    <input type="number" id="pointsInput" placeholder="Enter minimum points" />
+    <button type="button" id="teamFilterBtn">Filter by Team</button>
+    <button type="button" id="pointsFilterBtn">Filter by Points</button>
+    <button type="button" id="combinedFilterBtn">Filter Team + Points</button>
+</div>
+
+<p id="filterMessage" style="color:red;"></p>
+
+<h1>F1 Drivers</h1>
+<table border="1" cellpadding="6">
+    <thead>
+    <tr>
+        <th>Pos</th>
+        <th>Name</th>
+        <th>Team</th>
+        <th>Points</th>
+        <th>Wins</th>
+        <th>Podiums</th>
+        <th sec:authorize="hasRole('ADMIN')">Actions</th>
+    </tr>
+    </thead>
+    <tbody id="drivers-body">
+    <!-- Table rows will be dynamically inserted here -->
+    </tbody>
+</table>
+
+<script>
+    function renderTable(drivers) {
+        const tbody = document.getElementById("drivers-body");
+        tbody.innerHTML = "";
+
+        const isAdmin = document.body.dataset.isAdmin?.trim() === "true";
+
+        if(drivers.length === 0){
+            tbody.innerHTML = `<tr><td colspan="${isAdmin?7:6}" style="text-align:center;">No drivers found</td></tr>`;
+            return;
+        }
+
+        drivers.forEach((d, index) => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${d.nume}</td>
+                <td>${d.echipa}</td>
+                <td>${d.nrPuncte}</td>
+                <td>${d.nrVictorii}</td>
+                <td>${d.nrPodiumuri}</td>
+            `;
+
+            if (isAdmin) {
+                const actionsTd = document.createElement("td");
+
+                const modifyBtn = document.createElement("button");
+                modifyBtn.textContent = "Modify";
+                modifyBtn.onclick = () => openEditModal(d.id);
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.onclick = () => deleteDriver(d.id);
+
+                const addBtn = document.createElement("button");
+                addBtn.textContent = "Add Driver";
+                addBtn.onclick = openAddModal;
+
+                actionsTd.append(modifyBtn, deleteBtn, addBtn);
+                row.appendChild(actionsTd);
+            }
+
+            tbody.appendChild(row);
+        });
+    }
+
+    // Load functions
+    function loadAll() {
+        fetch("/api/drivers").then(res => res.json()).then(renderTable);
+    }
+
+    function loadTop() {
+        fetch("/api/drivers/top").then(res => res.json()).then(renderTable);
+    }
+
+    function loadTop3() {
+        fetch("/api/drivers/top3").then(res => res.json()).then(renderTable);
+    }
+
+    function loadNrvictorii() {
+        fetch("/api/drivers/nrvictorii").then(res => res.json()).then(renderTable);
+    }
+
+    // Filters
+    document.getElementById("pointsFilterBtn").addEventListener("click", function() {
+        const points = document.getElementById("pointsInput").value;
+        fetch(`/api/drivers/min-points?points=${points}`)
+            .then(res => res.json())
+            .then(renderTable)
+            .catch(err => console.error(err));
+    });
+
+    document.getElementById("teamFilterBtn").addEventListener("click", function() {
+        const echipa = document.getElementById("teamInput").value.trim();
+        if(!echipa){ document.getElementById("filterMessage").textContent = "Please enter a team name."; return; }
+        fetch(`/api/drivers/findechipa?echipa=${encodeURIComponent(echipa)}`)
+            .then(res => res.json())
+            .then(renderTable)
+            .catch(err => console.error(err));
+    });
+
+    document.getElementById("combinedFilterBtn").addEventListener("click", function() {
+        const echipa = document.getElementById("teamInput").value.trim();
+        const points = document.getElementById("pointsInput").value.trim();
+        if(!echipa || !points || isNaN(points)){
+            document.getElementById("filterMessage").textContent = "Please enter valid team and points.";
+            return;
+        }
+        fetch(`/api/drivers/filter?echipa=${encodeURIComponent(echipa)}&points=${points}`)
+            .then(res => res.json())
+            .then(renderTable)
+            .catch(err => console.error(err));
+    });
+
+    // Admin actions
+    function deleteDriver(id){
+        if(!confirm("Are you sure you want to delete this driver?")) return;
+
+        const token = document.querySelector('meta[name="_csrf"]').content;
+        const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+        fetch(`/admin/drivers/${id}`, {
+            method:"DELETE",
+            headers: { [header]: token }
+        }).then(res=>{
+            if(res.status===204){ loadAll(); }
+            else if(res.status===403){ alert("Not authorized"); }
+            else{ alert("Failed to delete driver"); }
+        }).catch(err=>console.error(err));
+    }
+
+    function openAddModal(){
+        document.getElementById("modalTitle").innerText = "Add Driver";
+        document.getElementById("driverId").value = "";
+        clearDriverForm();
+        document.getElementById("driverModal").style.display="block";
+    }
+
+    function openEditModal(id){
+        fetch(`/api/drivers/${id}`)
+            .then(res=>res.json())
+            .then(d=>{
+                document.getElementById("modalTitle").innerText="Modify Driver";
+                document.getElementById("driverId").value = d.id;
+                document.getElementById("nume").value = d.nume;
+                document.getElementById("echipa").value = d.echipa;
+                document.getElementById("nrPuncte").value = d.nrPuncte;
+                document.getElementById("nrVictorii").value = d.nrVictorii;
+                document.getElementById("nrPodiumuri").value = d.nrPodiumuri;
+                document.getElementById("driverModal").style.display="block";
+            });
+    }
+
+    function saveDriver(){
+        const id = document.getElementById("driverId").value;
+        const driver = {
+            nume: document.getElementById("nume").value,
+            echipa: document.getElementById("echipa").value,
+            nrPuncte: document.getElementById("nrPuncte").value,
+            nrVictorii: document.getElementById("nrVictorii").value,
+            nrPodiumuri: document.getElementById("nrPodiumuri").value
+        };
+        const token = document.querySelector('meta[name="_csrf"]').content;
+        const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+        fetch(id ? `/admin/drivers/${id}` : `/admin/drivers`, {
+            method: id?"PUT":"POST",
+            headers: { "Content-Type":"application/json", [header]: token },
+            body: JSON.stringify(driver)
+        }).then(res=>{
+            if(res.ok){ return res.json(); }
+            else{ throw new Error("Operation failed"); }
+        }).then(()=>{
+            closeModal();
+            loadAll();
+        }).catch(err=>{
+            console.error(err);
+            alert("Failed to save driver");
+        });
+    }
+
+    function closeModal(){ document.getElementById("driverModal").style.display="none"; }
+    function clearDriverForm(){
+        document.getElementById("nume").value="";
+        document.getElementById("echipa").value="";
+        document.getElementById("nrPuncte").value="";
+        document.getElementById("nrVictorii").value="";
+        document.getElementById("nrPodiumuri").value="";
+    }
+
+    // Initial load
+    loadAll();
+</script>
+
+<!-- Modal -->
+<div id="driverModal" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    z-index:1000;
+">
+    <div style="
+        background:white;
+        padding:20px;
+        width:400px;
+        margin:100px auto;
+        border-radius:10px;
+    ">
+        <h3 id="modalTitle">Add Driver</h3>
+        <input type="hidden" id="driverId">
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label for="nume" style="flex:1;">Name</label>
+            <input id="nume" type="text" style="flex:2;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label for="echipa" style="flex:1;">Team</label>
+            <input id="echipa" type="text" style="flex:2;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label for="nrPuncte" style="flex:1;">Points</label>
+            <input id="nrPuncte" type="number" style="flex:2;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label for="nrVictorii" style="flex:1;">Wins</label>
+            <input id="nrVictorii" type="number" style="flex:2;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <label for="nrPodiumuri" style="flex:1;">Podiums</label>
+            <input id="nrPodiumuri" type="number" style="flex:2;">
+        </div>
+
+        <div style="text-align:right;">
+            <button onclick="saveDriver()">Save</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
