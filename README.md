@@ -1,3 +1,3 @@
 # f1standings
-Proiect Java 
+Java Championship management project
 
